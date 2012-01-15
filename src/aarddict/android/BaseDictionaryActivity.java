@@ -25,7 +25,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Window;
+import android.view.*;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 abstract class BaseDictionaryActivity extends Activity {
@@ -167,5 +168,27 @@ abstract class BaseDictionaryActivity extends Activity {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
         unbindService(connection);
-    }    
+    }
+
+
+    public void setContentView(int layoutResID) {
+        super.setContentView(R.layout.nook);
+        LayoutInflater inflater = getLayoutInflater();
+        inflater.inflate(layoutResID, (ViewGroup) findViewById(R.id.inside_content));
+        ImageButton menu = (ImageButton) findViewById(R.id.nook_menu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openOptionsMenu();
+            }
+        });
+
+        ImageButton cancel = (ImageButton) findViewById(R.id.nook_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
 }

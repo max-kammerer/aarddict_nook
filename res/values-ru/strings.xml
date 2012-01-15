@@ -35,8 +35,9 @@
     <string name="about">    
         <![CDATA[
         <big>%1$s %2$s</big>
-        <p>(C) 2011 Игорь Ткач</p>
+        <p>(C) 2011 Игорь Ткач  (C) 2012 ported by kammerer </p>
         <p><a href="http://aarddict.org">http://aarddict.org</a></p>
+
         ]]>    
     </string>
     
