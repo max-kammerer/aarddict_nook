@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ArticleViewActivity" 
+        <activity android:name=".ArticleViewActivity" android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation">
         </activity>
 
