@@ -45,17 +45,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.Surface;
-import android.view.View;
-import android.view.Window;
+import android.view.*;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.webkit.*;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -134,7 +129,10 @@ public class ArticleViewActivity extends BaseDictionaryActivity {
         getWindow().requestFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.article_view);                                
         articleView = (ArticleView)findViewById(R.id.ArticleView);
+
         articleView2 = new ArticleView(this);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+        articleView2.setLayoutParams(lp);
         LinearLayout upperView = (LinearLayout) findViewById(R.id.upper_view);
         upperView.addView(articleView2);
 
