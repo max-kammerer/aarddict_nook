@@ -145,19 +145,23 @@ public final class Volume extends AbstractList<Entry> {
     };
     
     IndexItem readIndexItem(long i) throws IOException {
-        long pos = this.header.index1Offset + i * 8;
-        this.file.seek(pos);
+        Header h = this.header;
+        long pos = h.index1Offset + i * h.index1ItemSize;
+        RandomAccessFile f = this.file;
+        f.seek(pos);
         IndexItem indexItem = new IndexItem();
-        indexItem.keyPointer = this.file.readUnsignedInt();
-        indexItem.articlePointer = this.file.readUnsignedInt();
+        indexItem.keyPointer = f.readSpec(h.keyPointerSpec);
+        indexItem.articlePointer = f.readSpec(h.articlePointerSpec);
         return indexItem;
     }
 
     String readKey(long pointer) throws IOException {
-        long pos = this.header.index2Offset + pointer;
-        this.file.seek(pos);
-        int keyLength = this.file.readUnsignedShort();
-        return this.file.readUTF8(keyLength);
+        Header h = this.header;
+        long pos = h.index2Offset + pointer;
+        RandomAccessFile f = this.file;
+        f.seek(pos);
+        int keyLength = (int)f.readSpec(h.keyLengthSpec);
+        return f.readUTF8(keyLength);
     }
 
     Map <Long, Article> articleCache = new WeakHashMap<Long, Article>(20);    
@@ -166,16 +170,18 @@ public final class Volume extends AbstractList<Entry> {
     	Article a = articleCache.get(pointer);
     	if (a != null)
     		return a;
-        long pos = this.header.articleOffset + pointer;
-        this.file.seek(pos);
-        long articleLength = this.file.readUnsignedInt();
+        Header h = this.header;
+        long pos = h.articleOffset + pointer;
+        RandomAccessFile f = this.file;
+        f.seek(pos);
+        long articleLength = f.readSpec(h.articleLengthSpec);
 
         byte[] articleBytes = new byte[(int) articleLength];
-        this.file.read(articleBytes);
+        f.read(articleBytes);
         String serializedArticle = decompress(articleBytes);
         a = Article.fromJsonStr(serializedArticle);
-        a.dictionaryUUID = this.header.uuid;
-        a.volumeId = this.header.sha1sum;
+        a.dictionaryUUID = h.uuid;
+        a.volumeId = h.sha1sum;
         a.pointer = pointer;
         articleCache.put(pointer, a);
         return a;

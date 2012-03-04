@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="aarddict.android"
-      android:versionCode="10"
-      android:versionName="1.3.1"
-      >
+      android:versionCode="13"
+      android:versionName="1.4.1">
     <uses-sdk android:minSdkVersion="3"/>
-    <supports-screens
-        android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:anyDensity="true" />
+
     <application android:icon="@drawable/aarddict" 
     			 android:label="@string/appName">    			 
     	<activity android:name=".DictionariesActivity" 
